@@ -1,14 +1,6 @@
-//
-//  ContentView.swift
-//  WeatherApp
-//
-//  Created by Kaffoux on 23/05/2021.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-    
     @ObservedObject var viewModel: WeatherViewModel
     
     var body: some View {
@@ -60,11 +52,11 @@ struct WeatherRecordView: View {
                 // alignment: .leading -> nazwa miasta i parametr będą wyrównane względem siebie do lewej strony
                 VStack(alignment: .leading) {
                     Text(record.cityName)
-                    Text(String(format: WeatherViewParam.allCases[currentParamId].rawValue, getCurrentParamValue()))
+                    Text(String(format: WeatherViewParam.allCases[currentParamId].rawValue, getValueOfCurrentParam()))
                         .font(.caption)
                 // dodanie reakcji na kliknięcie na parametr pogody
                 }.onTapGesture {
-                    iterateWeatherParam()
+                    changeParam()
                 }
                 
                 // Spacer umożliwi zachowanie odstępu między poszczególnymi elmentami
@@ -81,7 +73,7 @@ struct WeatherRecordView: View {
         }
     }
 
-    func iterateWeatherParam() {
+    func changeParam() {
         var nextId = currentParamId + 1
         if (WeatherViewParam.allCases.count <= nextId) {
             nextId = 0
@@ -89,7 +81,7 @@ struct WeatherRecordView: View {
         currentParamId = nextId
     }
     
-    func getCurrentParamValue() -> Float {
+    func getValueOfCurrentParam() -> Float {
         let currentParam = WeatherViewParam.allCases[currentParamId]
         
         switch currentParam {
