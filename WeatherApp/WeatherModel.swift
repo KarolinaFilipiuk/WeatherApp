@@ -43,6 +43,9 @@ struct WeatherModel {
     
     mutating func refresh(record: WeatherRecord) {
         let idx = records.firstIndex(where: {$0.id == record.id} )
+        records[idx!].weatherState = WeatherState
+            .allCases
+            .randomElement() ?? WeatherState.Clear
         records[idx!].temperature = Float.random(in: -10.0 ... 30.0)
         records[idx!].humidity = Float.random(in: 0 ... 100)
         records[idx!].windSpeed = Float.random(in: 0 ... 20)
